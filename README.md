@@ -25,7 +25,7 @@ Or you can install plugin from Installer app in backend.
 ## Specificity
 Enable the plugin in settings and configure the appearance of the form. For products that need to price request, set **a price equal 0**
 
-![pricereq-product-edit-page](https://www.webasyst.com/wa-data/public/baza/products/img/16/2516/6942.970.png)
+![pricereq-product-edit-page](https://www.webasyst.com/wa-data/public/baza/products/img/20/2720/7878.970.png)
 
 ### The showing of the «Price request» button on the product page:
 You need to edit the template that displays the price and the «Buy» button. In the basic themes of Shop-Script is used for this **product.cart.html** template. First, find in the template the following code:
@@ -33,12 +33,12 @@ You need to edit the template that displays the price and the «Buy» button. In
 		<!-- price -->
 		<div class="add2cart">
 			{if $product.compare_price > 0}<span class="compare-at-price nowrap"> {shop_currency_html($product.compare_price)} </span>{/if}
-			**<span data-price="{shop_currency($product.price, null, null, 0)}" class="price nowrap">{shop_currency_html($product.price)}</span>**
+			`**`<span data-price="{shop_currency($product.price, null, null, 0)}" class="price nowrap">{shop_currency_html($product.price)}</span>`**`
 			<input type="hidden" name="product_id" value="{$product.id}">
-			**<span class="qty">**
-				**&times; <input type="text" name="quantity" value="1">**
-			**</span>**
-			**<input type="submit" {if !$product_available}disabled="disabled"{/if} value="[`Add to cart`]">**
+			`**`<span class="qty">`**`
+				`**`&times; <input type="text" name="quantity" value="1">`**`
+			`**`</span>`**`
+			`**`<input type="submit" {if !$product_available}disabled="disabled"{/if} value="[`Add to cart`]">`**`
 			<span class="added2cart" style="display: none;">{sprintf('[`%s is now <a href="%s"><strong>in your shopping cart</strong></a>`]', $product.name|escape, $wa->getUrl('shop/frontend/cart'))}</span>
 		</div>
 
