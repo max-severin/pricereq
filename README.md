@@ -33,12 +33,12 @@ You need to edit the template that displays the price and the «Buy» button. In
 		<!-- price -->
 		<div class="add2cart">
 			{if $product.compare_price > 0}<span class="compare-at-price nowrap"> {shop_currency_html($product.compare_price)} </span>{/if}
-			`**`<span data-price="{shop_currency($product.price, null, null, 0)}" class="price nowrap">{shop_currency_html($product.price)}</span>`**`
+			<span data-price="{shop_currency($product.price, null, null, 0)}" class="price nowrap">{shop_currency_html($product.price)}</span>
 			<input type="hidden" name="product_id" value="{$product.id}">
-			`**`<span class="qty">`**`
-				`**`&times; <input type="text" name="quantity" value="1">`**`
-			`**`</span>`**`
-			`**`<input type="submit" {if !$product_available}disabled="disabled"{/if} value="[`Add to cart`]">`**`
+			<span class="qty">
+				&times; <input type="text" name="quantity" value="1">
+			</span>
+			<input type="submit" {if !$product_available}disabled="disabled"{/if} value="[`Add to cart`]">
 			<span class="added2cart" style="display: none;">{sprintf('[`%s is now <a href="%s"><strong>in your shopping cart</strong></a>`]', $product.name|escape, $wa->getUrl('shop/frontend/cart'))}</span>
 		</div>
 
@@ -49,27 +49,66 @@ Then edit it as follows:
 			{if $product.compare_price > 0}<span class="compare-at-price nowrap"> {shop_currency_html($product.compare_price)} </span>{/if}
 			
 			<!-- Price request -->
-			**{if $product.price == 0}**
-			**<b>Price request</b>**
-			**{else}**
+			{if $product.price == 0}
+			<b>Price request</b>
+			{else}
 			<span data-price="{shop_currency($product.price, null, null, 0)}" class="price nowrap">{shop_currency_html($product.price)}</span>
-			**{/if}**
+			{/if}
 			<!-- Price request -->
 
 			<input type="hidden" name="product_id" value="{$product.id}">
 
 			<!-- Price request -->
-			**{if $product.price == 0}**
-			**<input type="button" value="How much?" class="price-req-button">**
-			**{else}**
+			{if $product.price == 0}
+			<input type="button" value="How much?" class="price-req-button">
+			{else}
 			<span class="qty">
 				&times; <input type="text" name="quantity" value="1">
 			</span>
 			<input type="submit" {if !$product_available}disabled="disabled"{/if} value="[`Add to cart`]">
-			**{/if}**
+			{/if}
 			<!-- Price request -->
 
 			<span class="added2cart" style="display: none;">{sprintf('[`%s is now <a href="%s"><strong>in your shopping cart</strong></a>`]', $product.name|escape, $wa->getUrl('shop/frontend/cart'))}</span>
 		</div>
 
 ![pricereq-product-edit-template](https://www.webasyst.com/wa-data/public/baza/products/img/20/2720/7880.970.png)
+
+### The showing of the «Price request» button in the categories, lists:
+You need to edit the template that generates the product lists. In the basic themes of Shop-Script is used for this **list-thumbs.html**. First, find in the template the following code:
+
+		<form class="purchase addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+			<span class="price nowrap" itemprop="price">{shop_currency_html($p.price)}</span>
+			<input type="hidden" name="product_id" value="{$p.id}">
+			<input type="submit" value="[`Add to cart`]">
+			<span class="added2cart" style="display: none;">{sprintf('[`%s is now <a href="%s"><strong>in your shopping cart</strong></a>`]', $p.name, $wa->getUrl('shop/frontend/cart'))}</span>
+		</form> 
+
+Then edit it as follows:
+
+		<form class="purchase addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+
+			<!-- Price request -->
+			{if $p.price == 0}
+			<b>Price request</b>
+			{else}
+			<span class="price nowrap" itemprop="price">{shop_currency_html($p.price)}</span>
+			{/if}
+			<!-- Price request -->
+
+			<input type="hidden" name="product_id" value="{$p.id}">
+
+			<!-- Price request -->
+			{if $p.price == 0}
+			<input type="button" value="How much?" class="price-req-button">
+			{else}
+			<input type="submit" value="[`Add to cart`]">
+			{/if}
+			<!-- Price request -->
+
+		<span class="added2cart" style="display: none;">{sprintf('[`%s is now <a href="%s"><strong>in your shopping cart</strong></a>`]', $p.name, $wa->getUrl('shop/frontend/cart'))}</span>
+		</form> 
+
+![pricereq-product-edit-template](https://www.webasyst.com/wa-data/public/baza/products/img/20/2720/7879.970.png)
+
+*The pictures show the principle and the approximate location of the calling plugin can be added to template files of basic design theme Clear. In other themes the plugin is installed the same way.*
