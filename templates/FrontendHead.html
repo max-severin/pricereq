@@ -1,0 +1,21 @@
+{if isset($pricereq_settings.id_in_html) && $pricereq_settings.id_in_html}
+	
+	<style type="text/css">
+		{include file="../css/pricereq.frontend.css" inline}
+	</style>
+
+	{if isset($pricereq_settings.phone_masked_input) && strlen($pricereq_settings.phone_masked_input) > 0}
+	<script type="text/javascript" src="{$wa_url}wa-apps/shop/plugins/pricereq/js/jquery.maskedinput.min.js"></script>
+	{/if}
+
+	<script type="text/javascript">
+		{include file="../js/pricereq.frontend.js"}
+	</script>
+
+	<script type="text/javascript">
+		(function ($) {
+		    pricereqFrontend.initModule();
+		})(jQuery);
+	</script>
+		
+{/if}
