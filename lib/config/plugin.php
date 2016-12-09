@@ -5,7 +5,7 @@
  */
 return array(
     'name' => /*_wp*/('Price request'),
-    'version' => '1.0.0',
+    'version' => '1.0.1',
     'img' => 'img/pricereq.png',
     'vendor' => 1020720,
     'shop_settings' => true,
