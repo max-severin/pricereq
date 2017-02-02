@@ -72,6 +72,8 @@ var pricereqFrontend = (function () { "use strict";
 
 		if ( p.length > 0 || e.length > 0 ) {
 			$.post("{$pricereq_url}", { "name": n, "phone": p, "email": e, "comment": c, "product_id": pId }, function (response) {
+				$('.price-req-form').css('height', '290px');
+
 				if (response.data.status === true) {
 					$('.price-req-input').remove();
 					$('.price-req-form').append(
