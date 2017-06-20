@@ -27,7 +27,27 @@ var pricereqFrontend = (function () { "use strict";
 		    form = $('<form />'),
 		    formTop = $(document).scrollTop() + $(window).height()/2 - '{$pricereq_settings.style_form_height}'/2,
 		    productId = $(event.target).closest('form').find('input[name="product_id"]').val(),
-		    pricereqCommentStatus = "{if isset($pricereq_settings.comment_status)}{$pricereq_settings.comment_status}{/if}";
+		    pricereqCommentStatus = "{if isset($pricereq_settings.comment_status)}{$pricereq_settings.comment_status}{/if}",
+			pricereqPrivacyStatus = "{if isset($pricereq_settings.privacy_status)}{$pricereq_settings.privacy_status}{/if}",
+			pricereqPrivacyCheckboxStatus = "{if isset($pricereq_settings.privacy_checkbox_status)}{$pricereq_settings.privacy_checkbox_status}{/if}",
+			pricereqPrivacyCheckboxChecked = "{if isset($pricereq_settings.privacy_checkbox_checked)}{$pricereq_settings.privacy_checkbox_checked}{/if}",
+			pricereqPrivacyAgreedBlock = '',
+			pricereqPrivacyAgreedCheckboxBlock = '',
+			pricereqPrivacyAgreedCheckboxChecked = '';
+
+		if (pricereqPrivacyStatus === 'on') {
+			if (pricereqPrivacyCheckboxChecked === 'checked') { 
+				pricereqPrivacyAgreedCheckboxChecked = 'checked="checked"';
+			}
+
+			if (pricereqPrivacyCheckboxStatus === 'on') { 
+				pricereqPrivacyAgreedCheckboxBlock = '<input type="hidden" value="0" name="price-req-privacy-agreed" /><input type="checkbox" value="1" name="price-req-privacy-agreed" id="price-req-privacy-agreed" ' + pricereqPrivacyAgreedCheckboxChecked + ' />';
+			}
+
+			pricereqPrivacyAgreedBlock = '<div class="call-b-input price-req-privacy-agreed-wrapper"><label for="price-req-privacy-agreed">' +
+			pricereqPrivacyAgreedCheckboxBlock + '<span>{$pricereq_settings.privacy_text}</span> <a href="{$pricereq_settings.privacy_link_url}" target="_blank">{$pricereq_settings.privacy_link_text}</a>' +
+			'</label></div>';
+		}
 
 		bg.addClass('price-req-bg').css('height', ($(document).height())+'px');
 		form.addClass('price-req-form').css({
@@ -41,6 +61,7 @@ var pricereqFrontend = (function () { "use strict";
 			'<div class="price-req-input"><input type="text" name="pricereq-phone" placeholder="{$pricereq_settings.text_phone_placeholder}" value="" /></div>' +
 			'<div class="price-req-input"><input type="text" name="pricereq-email" placeholder="{$pricereq_settings.text_email_placeholder}" value="" /></div>' +
             '<div class="price-req-input"><textarea name="comment" placeholder="{$pricereq_settings.text_comment_placeholder}"></textarea></div>' +
+            pricereqPrivacyAgreedBlock +
 			'<div class="price-req-input"><input id="price-req-submit" type="submit" value="{$pricereq_settings.text_submit_button}" style="background: #{$pricereq_settings.style_submit_background}; color: #{$pricereq_settings.style_submit_text_color}; height: {$pricereq_settings.style_submit_height}px; width: {$pricereq_settings.style_submit_width}px" /></div>'
 		);
 
@@ -52,20 +73,20 @@ var pricereqFrontend = (function () { "use strict";
 		$('.price-req-form input[name="pricereq-phone"]').mask('{$pricereq_settings.phone_masked_input}');
 		{/if}
 
-        if (pricereqCommentStatus !== 'on') {
-            $('textarea[name="comment"]').parent('.price-req-input').hide();
-        }
+		if (pricereqCommentStatus !== 'on') {
+			$('textarea[name="comment"]').parent('.price-req-input').hide();
+		}
 	};
 
 	onFormSubmit = function (event) {
 		event.preventDefault();
 
 		var n = $('.price-req-input').find('input[name="pricereq-name"]').val(),
-		    p = $('.price-req-input').find('input[name="pricereq-phone"]').val(),
-		    e = $('.price-req-input').find('input[name="pricereq-email"]').val(),
-		    c = $('.price-req-input').find('textarea[name="comment"]').val(),
-		    err = $('<div/>'),
-		    pId = $('.price-req-header').find('input[name="price-req-product-id"]').val();
+			p = $('.price-req-input').find('input[name="pricereq-phone"]').val(),
+			e = $('.price-req-input').find('input[name="pricereq-email"]').val(),
+			c = $('.price-req-input').find('textarea[name="comment"]').val(),
+			err = $('<div/>'),
+			pId = $('.price-req-header').find('input[name="price-req-product-id"]').val();
 
 		$('.price-req-error').remove();
 		$('.price-req-input').find('input[name="pricereq-name"], input[name="pricereq-phone"]').removeClass('price-req-inp-err');
