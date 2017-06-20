@@ -10,8 +10,8 @@ var pricereqBackendSettings = (function () { "use strict";
     var
         farbtastic_url = "{$wa_url}wa-content/js/farbtastic/farbtastic.js?{$wa->version(true)}",
         htmlTagsEncode, htmlTagsDecode,
-        addPricereqForm, checkCommentStatus, initColorPicker, setColorPickerElement, setColorPicker, onFormSubmit, changeColorPickerInputValue,
-        textBlockHtmlChange, textPlaceholderChange, textInputValueChange, styleChange, changeHandlers, onStatusChange, onCommentStatusChange,
+        addPricereqForm, checkCommentStatus, checkPrivacyStatus, initColorPicker, setColorPickerElement, setColorPicker, onFormSubmit, changeColorPickerInputValue,
+        textBlockHtmlChange, textAttrChange, textInputValueChange, styleChange, changeHandlers, onStatusChange, onCommentStatusChange, onPrivacyStatusChange, onPrivacyCheckboxStatusChange,
         initModule;
     //----------------- END MODULE SCOPE VARIABLES ----------------
 
@@ -40,6 +40,11 @@ var pricereqBackendSettings = (function () { "use strict";
             textPhonePlaceholder = htmlTagsEncode( $('#pricereq_shop_pricereq_text_phone_placeholder').val() ),
             textEmailPlaceholder = htmlTagsEncode( $('#pricereq_shop_pricereq_text_email_placeholder').val() ),
             textCommentPlaceholder = htmlTagsEncode( $('#pricereq_shop_pricereq_text_comment_placeholder').val() ),
+
+            privacyText = htmlTagsEncode( $('#pricereq_shop_pricereq_privacy_text').val() ),
+            privacyLinkText = htmlTagsEncode( $('#pricereq_shop_pricereq_privacy_link_text').val() ),
+            privacyLinkUrl = htmlTagsEncode( $('#pricereq_shop_pricereq_privacy_link_url').val() ),
+
             textSubmitButton = htmlTagsEncode( $('#pricereq_shop_pricereq_text_submit_button').val() ),
             styleSubmitBackground = 'background: #' + $('#pricereq_shop_pricereq_style_submit_background').val() + ';',
             styleSubmitTextColor = 'color: #' + $('#pricereq_shop_pricereq_style_submit_text_color').val() + ';',
@@ -59,6 +64,9 @@ var pricereqBackendSettings = (function () { "use strict";
                 '<div class="price-req-input"><input type="text" name="pricereq-phone" placeholder="' + textPhonePlaceholder + '" value="" /></div>' +
                 '<div class="price-req-input"><input type="text" name="pricereq-email" placeholder="' + textEmailPlaceholder + '" value="" /></div>' +
                 '<div class="price-req-input"><textarea name="comment" placeholder="' + textCommentPlaceholder + '"></textarea></div>' +
+                '<div class="price-req-input price-req-privacy-agreed-wrapper"><label for="price-req-privacy-agreed">' +
+                '<input type="hidden" value="0" name="price-req-privacy-agreed" /><input type="checkbox" value="1" name="price-req-privacy-agreed" id="price-req-privacy-agreed" /><span>' + privacyText + '</span> <a href="' + privacyLinkUrl + '" target="_blank">' + privacyLinkText + '</a>' +
+                '</label> </div>' +
                 '<div class="price-req-input"><input id="price-req-submit" type="submit" value="' + textSubmitButton + '" disabled="disabled" style="' + styleSubmitBackground + styleSubmitTextColor + styleSubmitHeight + styleSubmitWidth + '" /></div>'
             );
 
@@ -67,6 +75,8 @@ var pricereqBackendSettings = (function () { "use strict";
             $('.price-req-form').fadeIn('500');
 
             checkCommentStatus();
+
+            checkPrivacyStatus();
         }
     };
 
@@ -75,6 +85,24 @@ var pricereqBackendSettings = (function () { "use strict";
 
         if (pricereqCommentStatus !== 'on') {
             $('textarea[name="comment"]').parent('.price-req-input').hide();
+        }
+    };
+
+    checkPrivacyStatus = function () {
+        var pricereqPrivacyStatus = "{if isset($pricereq_settings.privacy_status)}{$pricereq_settings.privacy_status}{/if}",
+            pricereqPrivacyCheckboxStatus = "{if isset($pricereq_settings.privacy_checkbox_status)}{$pricereq_settings.privacy_checkbox_status}{/if}",
+            pricereqPrivacyCheckboxChecked = "{if isset($pricereq_settings.privacy_checkbox_checked)}{$pricereq_settings.privacy_checkbox_checked}{/if}";
+
+        if (pricereqPrivacyStatus !== 'on') {
+            $('.price-req-privacy-agreed-wrapper').hide();
+        }
+
+        if (pricereqPrivacyCheckboxStatus !== 'on') {
+            $('.price-req-privacy-agreed-wrapper input[type=checkbox]').hide();
+        }
+
+        if (pricereqPrivacyCheckboxChecked === 'checked') {
+            $('.price-req-privacy-agreed-wrapper input[type=checkbox]').attr('checked', 'checked');
         }
     };
 
@@ -165,9 +193,9 @@ var pricereqBackendSettings = (function () { "use strict";
         });
     };
 
-    textPlaceholderChange = function (el_changed, el_changing) {
+    textAttrChange = function (el_changed, el_changing, el_attr) {
         el_changed.on('change', function (){
-            $(document).find(el_changing).attr('placeholder', el_changed.val());
+            $(document).find(el_changing).attr(el_attr, el_changed.val());
         });
     };
 
@@ -185,10 +213,10 @@ var pricereqBackendSettings = (function () { "use strict";
 
     changeHandlers = function () {
         textBlockHtmlChange( $('#pricereq_shop_pricereq_text_header_title'), '.price-req-header' );
-        textPlaceholderChange( $('#pricereq_shop_pricereq_text_name_placeholder'), '.price-req-input input[name="pricereq-name"]' );
-        textPlaceholderChange( $('#pricereq_shop_pricereq_text_phone_placeholder'), '.price-req-input input[name="pricereq-phone"]' );
-        textPlaceholderChange( $('#pricereq_shop_pricereq_text_email_placeholder'), '.price-req-input input[name="pricereq-email"]' );
-        textPlaceholderChange( $('#pricereq_shop_pricereq_text_comment_placeholder'), '.price-req-input textarea[name="comment"]' );
+        textAttrChange( $('#pricereq_shop_pricereq_text_name_placeholder'), '.price-req-input input[name="pricereq-name"]', 'placeholder' );
+        textAttrChange( $('#pricereq_shop_pricereq_text_phone_placeholder'), '.price-req-input input[name="pricereq-phone"]', 'placeholder' );
+        textAttrChange( $('#pricereq_shop_pricereq_text_email_placeholder'), '.price-req-input input[name="pricereq-email"]', 'placeholder' );
+        textAttrChange( $('#pricereq_shop_pricereq_text_comment_placeholder'), '.price-req-input textarea[name="comment"]', 'placeholder' );
         textInputValueChange( $('#pricereq_shop_pricereq_text_submit_button'), '#price-req-submit' );
 
         styleChange($('#pricereq_shop_pricereq_style_form_width'), '.price-req-form', 'width', 'px', '');
@@ -203,6 +231,10 @@ var pricereqBackendSettings = (function () { "use strict";
 
         styleChange($('#pricereq_shop_pricereq_style_submit_background'), '#price-req-submit', 'background', '', '#');
         styleChange($('#pricereq_shop_pricereq_style_submit_text_color'), '#price-req-submit', 'color', '', '#');
+
+        textBlockHtmlChange( $('#pricereq_shop_pricereq_privacy_text'), '.price-req-privacy-agreed-wrapper span' );
+        textBlockHtmlChange( $('#pricereq_shop_pricereq_privacy_link_text'), '.price-req-privacy-agreed-wrapper a' );
+        textAttrChange( $('#pricereq_shop_pricereq_privacy_link_url'), '.price-req-privacy-agreed-wrapper a', 'href' );
     };
 
     onStatusChange = function () {
@@ -225,6 +257,26 @@ var pricereqBackendSettings = (function () { "use strict";
         }
     };
 
+    onPrivacyStatusChange = function () {
+        var t = $(this);
+
+        if (t.val() === 'on') {
+            $('.price-req-privacy-agreed-wrapper').show();
+        } else {
+            $('.price-req-privacy-agreed-wrapper').hide();
+        }
+    };
+
+    onPrivacyCheckboxStatusChange = function () {
+        var t = $(this);
+
+        if (t.val() === 'on') {
+            $('.price-req-privacy-agreed-wrapper input[type=checkbox]').show();
+        } else {
+            $('.price-req-privacy-agreed-wrapper input[type=checkbox]').hide();
+        }
+    };
+
     changeColorPickerInputValue = function (input, $color) {
         var color = 0xFFFFFF & parseInt(('' + input.value + 'FFFFFF').replace(/[^0-9A-F]+/gi, '').substr(0, 6), 16);
         $color.css('background', (0xF000000 | color).toString(16).toUpperCase().replace(/^F/, '#'));
@@ -238,6 +290,10 @@ var pricereqBackendSettings = (function () { "use strict";
         $('#pricereq_shop_pricereq_status').on('change', onStatusChange);
 
         $('#pricereq_shop_pricereq_comment_status').on('change', onCommentStatusChange);
+
+        $('#pricereq_shop_pricereq_privacy_status').on('change', onPrivacyStatusChange);
+
+        $('#pricereq_shop_pricereq_privacy_checkbox_status').on('change', onPrivacyCheckboxStatusChange);
 
         addPricereqForm( $('#wa-plugins-content .form') );
 
@@ -267,7 +323,9 @@ var pricereqBackendSettings = (function () { "use strict";
 
         changeHandlers();
 
-        checkCommentStatus();        
+        checkCommentStatus();    
+
+        checkPrivacyStatus();      
 
         $('.plugin-links a').css({
             'display': 'block',

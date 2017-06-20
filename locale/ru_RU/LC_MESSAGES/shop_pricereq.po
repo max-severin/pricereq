@@ -373,3 +373,63 @@ msgstr "плагин «Запрос цены»"
 #: /wa-apps/shop/plugins/pricereq/lib/actions/shopPricereqPluginFrontendPricereq.controller.php:59
 msgid "Administrator"
 msgstr "Администратор"
+
+#: /wa-apps/shop/plugins/pricereq/lib/updates/1.1.0/1497799189.php:11
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:244
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:245
+msgid "Clicking on the «Send» button, I give my"
+msgstr "Нажимая на кнопку «Отправить», я даю"
+
+#: /wa-apps/shop/plugins/pricereq/lib/updates/1.1.0/1497799189.php:12
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:250
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:251
+msgid "consent to the personal data processing"
+msgstr "согласие на обработку персональных данных"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:233
+msgid "Consent to the personal data processing"
+msgstr "Согласие на обработку персональных данных"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:234
+msgid "Enable this setting to add to the form a checkbox consent to the processing of personal data and the link to the page with the Privacy Policy of the company."
+msgstr "Включите данную настройку, чтобы добавить в форму чекбокс (галочку) о согласии на обработку персональных данных и ссылку на страницу с Политикой конфиденциальности компании."
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:244
+msgid "Text"
+msgstr "Текст"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:250
+msgid "Link text"
+msgstr "Текст ссылки"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:256
+msgid "Link url"
+msgstr "Url ссылки"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:256
+msgid "Url of the page with the Privacy Policy."
+msgstr "Адрес страницы с Политикой конфиденциальности."
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:263
+msgid "Show checkbox"
+msgstr "Показывать чекбокс"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:263
+msgid "Enable this setting to display the checkbox, otherwise it will display only the text and link."
+msgstr "Включите данную настройку, чтобы отображать чекбокс, в противном случае будет показан только текст и ссылка."
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:273
+msgid "Checkbox by default"
+msgstr "Чекбокс по умолчанию"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:273
+msgid "Select the status of the checkbox by default."
+msgstr "Выберите состояние чекбокса по умолчанию."
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:278
+msgid "Unchecked"
+msgstr "Не нажат"
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:282
+msgid "Checked"
+msgstr "Нажат"

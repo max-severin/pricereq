@@ -125,13 +125,13 @@ return array(
     ),
     'style_form_height' => array(
         'title'        => _wp('Form height (px)'),
-        'description'  => _wp('Value range 340-480'),
+        'description'  => _wp('Value range 340-520'),
         'placeholder'  => '350',
         'value'        => '350',
         'control_type' => waHtmlControl::CUSTOM.' '.'shopPricereqPlugin::settingNumberControl',
         'options'      => array(
             'min'  => '340',
-            'max'  => '480',
+            'max'  => '520',
             'step' => '1',
         ),
     ),
@@ -228,4 +228,55 @@ return array(
         'value'        => '717171',
         'control_type' => waHtmlControl::CUSTOM.' '.'shopPricereqPlugin::settingColorControl',
     ),
+
+    'privacy_status' => array(
+        'title'        => _wp('Consent to the personal data processing'),
+        'description'  => _wp('Enable this setting to add to the form a checkbox consent to the processing of personal data and the link to the page with the Privacy Policy of the company.'),
+        'value'        => 'off',
+        'control_type' => waHtmlControl::SELECT,
+        'options'      => array(
+            'off' => _wp('Off'),
+            'on'  => _wp('On'),
+        ),
+    ),
+    'privacy_text' => array(
+        'title'        => _wp('Text'),
+        'placeholder'  => _wp('Clicking on the «Send» button, I give my'),
+        'value'        => _wp('Clicking on the «Send» button, I give my'),
+        'control_type' => waHtmlControl::INPUT,
+    ),
+    'privacy_link_text' => array(
+        'title'        => _wp('Link text'),
+        'placeholder'  => _wp('consent to the personal data processing'),
+        'value'        => _wp('consent to the personal data processing'),
+        'control_type' => waHtmlControl::INPUT,
+    ),
+    'privacy_link_url' => array(
+        'title'        => _wp('Link url'),
+        'description'  => _wp('Url of the page with the Privacy Policy.'),
+        'placeholder'  => '/site/privacy-policy/',
+        'value'        => '/site/privacy-policy/',
+        'control_type' => waHtmlControl::INPUT,
+    ),
+    'privacy_checkbox_status' => array(
+        'title'        => _wp('Show checkbox'),
+        'description'  => _wp('Enable this setting to display the checkbox, otherwise it will display only the text and link.'),
+        'value'        => 'on',
+        'control_type' => waHtmlControl::SELECT,
+        'options'      => array(
+            'off' => _wp('Off'),
+            'on'  => _wp('On'),
+        ),
+    ),
+    'privacy_checkbox_checked' => array(
+        'title'        => _wp('Checkbox by default'),
+        'description'  => _wp('Select the status of the checkbox by default.'),
+        'value'        => 'unchecked',
+        'control_type' => waHtmlControl::SELECT,
+        'options'      => array(
+            'unchecked' => _wp('Unchecked'),
+            'checked'  => _wp('Checked'),
+        ),
+    ),
+    
 );

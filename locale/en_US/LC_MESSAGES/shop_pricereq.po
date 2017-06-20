@@ -372,3 +372,63 @@ msgstr ""
 #: /wa-apps/shop/plugins/pricereq/lib/actions/shopPricereqPluginFrontendPricereq.controller.php:59
 msgid "Administrator"
 msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/updates/1.1.0/1497799189.php:11
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:244
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:245
+msgid "Clicking on the «Send» button, I give my"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/updates/1.1.0/1497799189.php:12
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:250
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:251
+msgid "consent to the personal data processing"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:233
+msgid "Consent to the personal data processing"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:234
+msgid "Enable this setting to add to the form a checkbox consent to the processing of personal data and the link to the page with the Privacy Policy of the company."
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:244
+msgid "Text"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:250
+msgid "Link text"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:256
+msgid "Link url"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:256
+msgid "Url of the page with the Privacy Policy."
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:263
+msgid "Show checkbox"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:263
+msgid "Enable this setting to display the checkbox, otherwise it will display only the text and link."
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:273
+msgid "Checkbox by default"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:273
+msgid "Select the status of the checkbox by default."
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:278
+msgid "Unchecked"
+msgstr ""
+
+#: /wa-apps/shop/plugins/pricereq/lib/config/settings.php:282
+msgid "Checked"
+msgstr ""

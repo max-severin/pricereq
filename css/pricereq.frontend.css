@@ -24,3 +24,5 @@
 .price-req-input textarea::-moz-placeholder          { color: #666; }/* Firefox 19+ */
 .price-req-input textarea:-moz-placeholder           { color: #666; }/* Firefox 18- */
 .price-req-input textarea:-ms-input-placeholder      { color: #666; }
+
+.price-req-privacy-agreed-wrapper { color: #666; font-size: 12px; line-height: 14px; margin: 10px auto 0; text-align: left; width: 300px; }
