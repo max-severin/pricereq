@@ -8,12 +8,25 @@
 var pricereqFrontend = (function () { "use strict";
 	//---------------- BEGIN MODULE SCOPE VARIABLES ---------------
 	var
-		onIdinhtmlClick, removePricereqForm, onFormSubmit, initModule;
+		onIdinhtmlClick, removePricereqForm, checkPrivacyCheckbox, onFormSubmit, initModule;
 	//----------------- END MODULE SCOPE VARIABLES ----------------
 
 	//--------------------- BEGIN DOM METHODS ---------------------
 	removePricereqForm = function () {
 		$('.price-req-bg, .price-req-form').remove();
+	};
+
+	checkPrivacyCheckbox = function () {
+		var pricereqPrivacyStatus = "{if isset($pricereq_settings.privacy_status)}{$pricereq_settings.privacy_status}{/if}";
+		var pricereqPrivacyCheckboxStatus = "{if isset($pricereq_settings.privacy_checkbox_status)}{$pricereq_settings.privacy_checkbox_status}{/if}";
+
+		if (pricereqPrivacyStatus === 'on' && pricereqPrivacyCheckboxStatus === 'on') {   	
+			if ($('#price-req-privacy-agreed').is(':checked')) {
+				$('#price-req-submit').prop('disabled', false);
+			} else {
+				$('#price-req-submit').prop('disabled', true);
+			}
+		}
 	};
 	//--------------------- END DOM METHODS -----------------------
 
@@ -32,8 +45,8 @@ var pricereqFrontend = (function () { "use strict";
 			pricereqPrivacyCheckboxStatus = "{if isset($pricereq_settings.privacy_checkbox_status)}{$pricereq_settings.privacy_checkbox_status}{/if}",
 			pricereqPrivacyCheckboxChecked = "{if isset($pricereq_settings.privacy_checkbox_checked)}{$pricereq_settings.privacy_checkbox_checked}{/if}",
 			pricereqPrivacyAgreedBlock = '',
-			pricereqPrivacyAgreedCheckboxBlock = '',
-			pricereqPrivacyAgreedCheckboxChecked = '';
+			pricereqPrivacyAgreedCheckboxChecked = '',
+			pricereqPrivacyAgreedCheckboxBlock = '';
 
 		if (pricereqPrivacyStatus === 'on') {
 			if (pricereqPrivacyCheckboxChecked === 'checked') { 
@@ -66,6 +79,8 @@ var pricereqFrontend = (function () { "use strict";
 		);
 
 		$('body').prepend(form).prepend(bg);
+
+		checkPrivacyCheckbox();
 
 		$('.price-req-form input[name="pricereq-name"]').focus();
 
@@ -141,6 +156,8 @@ var pricereqFrontend = (function () { "use strict";
 		});
 
 		$(document).on('submit', '.price-req-form', onFormSubmit);
+
+		$(document).on('change', '#price-req-privacy-agreed', checkPrivacyCheckbox);
 	};
 
 	return {
