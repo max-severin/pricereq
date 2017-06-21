@@ -16,3 +16,5 @@
 
 #pricereq_shop_pricereq_privacy_text,
 #pricereq_shop_pricereq_privacy_link_text { width: 350px; }
+
+#price-req-submit:disabled { cursor: default; opacity: 1; }
