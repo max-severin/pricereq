@@ -8,6 +8,7 @@
 var pricereqFrontend = (function () { "use strict";
 	//---------------- BEGIN MODULE SCOPE VARIABLES ---------------
 	var
+		$pricereqUrl, $pricereqSettings, $localeSettings,
 		onIdinhtmlClick, removePricereqForm, checkPrivacyCheckbox, onFormSubmit, initModule;
 	//----------------- END MODULE SCOPE VARIABLES ----------------
 
@@ -17,10 +18,7 @@ var pricereqFrontend = (function () { "use strict";
 	};
 
 	checkPrivacyCheckbox = function () {
-		var pricereqPrivacyStatus = "{if isset($pricereq_settings.privacy_status)}{$pricereq_settings.privacy_status}{/if}";
-		var pricereqPrivacyCheckboxStatus = "{if isset($pricereq_settings.privacy_checkbox_status)}{$pricereq_settings.privacy_checkbox_status}{/if}";
-
-		if (pricereqPrivacyStatus === 'on' && pricereqPrivacyCheckboxStatus === 'on') {   	
+		if ($pricereqSettings.privacy_status === 'on' && $pricereqSettings.privacy_checkbox_status === 'on') {   	
 			if ($('#price-req-privacy-agreed').is(':checked')) {
 				$('#price-req-submit').prop('disabled', false);
 			} else {
@@ -37,45 +35,41 @@ var pricereqFrontend = (function () { "use strict";
 		removePricereqForm();
 
 		var bg = $('<div/>'),
-		    form = $('<form />'),
-		    formTop = $(document).scrollTop() + $(window).height()/2 - '{$pricereq_settings.style_form_height}'/2,
-		    productId = $(event.target).closest('form').find('input[name="product_id"]').val(),
-		    pricereqCommentStatus = "{if isset($pricereq_settings.comment_status)}{$pricereq_settings.comment_status}{/if}",
-			pricereqPrivacyStatus = "{if isset($pricereq_settings.privacy_status)}{$pricereq_settings.privacy_status}{/if}",
-			pricereqPrivacyCheckboxStatus = "{if isset($pricereq_settings.privacy_checkbox_status)}{$pricereq_settings.privacy_checkbox_status}{/if}",
-			pricereqPrivacyCheckboxChecked = "{if isset($pricereq_settings.privacy_checkbox_checked)}{$pricereq_settings.privacy_checkbox_checked}{/if}",
+			form = $('<form />'),
+			formTop = $(document).scrollTop() + $(window).height()/2 - $pricereqSettings.style_form_height/2,
+			productId = $(event.target).closest('form').find('input[name="product_id"]').val(),
 			pricereqPrivacyAgreedBlock = '',
 			pricereqPrivacyAgreedCheckboxChecked = '',
 			pricereqPrivacyAgreedCheckboxBlock = '';
 
-		if (pricereqPrivacyStatus === 'on') {
-			if (pricereqPrivacyCheckboxChecked === 'checked') { 
+		if ($pricereqSettings.privacy_status === 'on') {
+			if ($pricereqSettings.privacy_checkbox_checked === 'checked') { 
 				pricereqPrivacyAgreedCheckboxChecked = 'checked="checked"';
 			}
 
-			if (pricereqPrivacyCheckboxStatus === 'on') { 
+			if ($pricereqSettings.privacy_checkbox_status === 'on') { 
 				pricereqPrivacyAgreedCheckboxBlock = '<input type="hidden" value="0" name="price-req-privacy-agreed" /><input type="checkbox" value="1" name="price-req-privacy-agreed" id="price-req-privacy-agreed" ' + pricereqPrivacyAgreedCheckboxChecked + ' /> ';
 			}
 
 			pricereqPrivacyAgreedBlock = '<div class="price-req-input price-req-privacy-agreed-wrapper"><label for="price-req-privacy-agreed">' +
-			pricereqPrivacyAgreedCheckboxBlock + '<span>{$pricereq_settings.privacy_text}</span> <a href="{$pricereq_settings.privacy_link_url}" target="_blank">{$pricereq_settings.privacy_link_text}</a>' +
+			pricereqPrivacyAgreedCheckboxBlock + '<span>' + $pricereqSettings.privacy_text + '</span> <a href="' + $pricereqSettings.privacy_link_url + '" target="_blank">' + $pricereqSettings.privacy_link_text + '</a>' +
 			'</label></div>';
 		}
 
 		bg.addClass('price-req-bg').css('height', ($(document).height())+'px');
 		form.addClass('price-req-form').css({
-			'background': '#{$pricereq_settings.style_form_background}',
-			'height': '{$pricereq_settings.style_form_height}px',
-			'width': '{$pricereq_settings.style_form_width}px',
+			'background': '#' + $pricereqSettings.style_form_background,
+			'height': $pricereqSettings.style_form_height + 'px',
+			'width': $pricereqSettings.style_form_width + 'px',
 			'top' : formTop+'px'
 		}).prepend(
-			'<div class="price-req-header" style="background: #{$pricereq_settings.style_header_background}; color: #{$pricereq_settings.style_header_text_color};">{$pricereq_settings.text_header_title}<span id="price-req-close-x">x</span><input type="hidden" name="price-req-product-id" value="' + productId + '" /></div>' +
-			'<div class="price-req-input"><input type="text" name="pricereq-name" placeholder="{$pricereq_settings.text_name_placeholder}" value="" /></div>' +
-			'<div class="price-req-input"><input type="text" name="pricereq-phone" placeholder="{$pricereq_settings.text_phone_placeholder}" value="" /></div>' +
-			'<div class="price-req-input"><input type="text" name="pricereq-email" placeholder="{$pricereq_settings.text_email_placeholder}" value="" /></div>' +
-            '<div class="price-req-input"><textarea name="comment" placeholder="{$pricereq_settings.text_comment_placeholder}"></textarea></div>' +
-            pricereqPrivacyAgreedBlock +
-			'<div class="price-req-input"><input id="price-req-submit" type="submit" value="{$pricereq_settings.text_submit_button}" style="background: #{$pricereq_settings.style_submit_background}; color: #{$pricereq_settings.style_submit_text_color}; height: {$pricereq_settings.style_submit_height}px; width: {$pricereq_settings.style_submit_width}px" /></div>'
+			'<div class="price-req-header" style="background: #' + $pricereqSettings.style_header_background + '; color: #' + $pricereqSettings.style_header_text_color + ';">' + $pricereqSettings.text_header_title + '<span id="price-req-close-x">x</span><input type="hidden" name="price-req-product-id" value="' + productId + '" /></div>' +
+			'<div class="price-req-input"><input type="text" name="pricereq-name" placeholder="' + $pricereqSettings.text_name_placeholder + '" value="" /></div>' +
+			'<div class="price-req-input"><input type="text" name="pricereq-phone" placeholder="' + $pricereqSettings.text_phone_placeholder + '" value="" /></div>' +
+			'<div class="price-req-input"><input type="text" name="pricereq-email" placeholder="' + $pricereqSettings.text_email_placeholder + '" value="" /></div>' +
+			'<div class="price-req-input"><textarea name="comment" placeholder="' + $pricereqSettings.text_comment_placeholder + '"></textarea></div>' +
+			pricereqPrivacyAgreedBlock +
+			'<div class="price-req-input"><input id="price-req-submit" type="submit" value="' + $pricereqSettings.text_submit_button + '" style="background: #' + $pricereqSettings.style_submit_background + '; color: #' + $pricereqSettings.style_submit_text_color + '; height: ' + $pricereqSettings.style_submit_height + 'px; width: ' + $pricereqSettings.style_submit_width + 'px" /></div>'
 		);
 
 		$('body').prepend(form).prepend(bg);
@@ -84,11 +78,11 @@ var pricereqFrontend = (function () { "use strict";
 
 		$('.price-req-form input[name="pricereq-name"]').focus();
 
-		{if isset($pricereq_settings.phone_masked_input) && strlen($pricereq_settings.phone_masked_input) > 0}
-		$('.price-req-form input[name="pricereq-phone"]').mask('{$pricereq_settings.phone_masked_input}');
-		{/if}
+		if ($pricereqSettings.comment_status !== 'on') {
+			$('.price-req-form input[name="pricereq-phone"]').mask($pricereqSettings.phone_masked_input);
+		}
 
-		if (pricereqCommentStatus !== 'on') {
+		if ($pricereqSettings.comment_status !== 'on') {
 			$('textarea[name="comment"]').parent('.price-req-input').hide();
 		}
 	};
@@ -107,21 +101,21 @@ var pricereqFrontend = (function () { "use strict";
 		$('.price-req-input').find('input[name="pricereq-name"], input[name="pricereq-phone"]').removeClass('price-req-inp-err');
 
 		if ( p.length > 0 || e.length > 0 ) {
-			$.post("{$pricereq_url}", { "name": n, "phone": p, "email": e, "comment": c, "product_id": pId }, function (response) {
+			$.post($pricereqUrl, { "name": n, "phone": p, "email": e, "comment": c, "product_id": pId }, function (response) {
 				$('.price-req-form').css('height', '290px');
 
 				if (response.data.status === true) {
 					$('.price-req-input').remove();
 					$('.price-req-form').append(
-						'<p class="price-req-ok" style="color: #{$pricereq_settings.style_thanks_text_color};">{$pricereq_settings.text_thanks_message} ' + response.data.name + ',</p>' +
-						'<p class="price-req-ok" style="color: #{$pricereq_settings.style_thanks_text_color};">{$pricereq_settings.text_more_thanks_message}</p>' +
-						'<div class="price-req-input"><input id="price-req-close" type="button" value=\"{_wp("Close")}\" style="background: #{$pricereq_settings.style_close_ok_background}; height: {$pricereq_settings.style_submit_height}px; width: {$pricereq_settings.style_submit_width}px;" /></div>'
+						'<p class="price-req-ok" style="color: #' + $pricereqSettings.style_thanks_text_color + ';">' + $pricereqSettings.text_thanks_message + ' ' + response.data.name + ',</p>' +
+						'<p class="price-req-ok" style="color: #' + $pricereqSettings.style_thanks_text_color + ';">' + $pricereqSettings.text_more_thanks_message + '</p>' +
+						'<div class="price-req-input"><input id="price-req-close" type="button" value=\"' + $localeSettings.text_close + '\" style="background: #' + $pricereqSettings.style_close_ok_background + '; height: ' + $pricereqSettings.style_submit_height + 'px; width: ' + $pricereqSettings.style_submit_width + 'px;" /></div>'
 					);
 				} else {
 					$('.price-req-input').remove();
 					$('.price-req-form').append(
-						'<p class="price-req-ok margins">{_wp("Error occurred when sending message")}</p>' +
-						'<div class="price-req-input"><input class="price-req-close-error" id="price-req-close" type="button" value=\"{_wp("Close")}\" style="background: #{$pricereq_settings.style_close_error_background}; height: {$pricereq_settings.style_submit_height}px; width: {$pricereq_settings.style_submit_width}px;" /></div>'
+						'<p class="price-req-ok margins">' + $localeSettings.error_sendmail + '</p>' +
+						'<div class="price-req-input"><input class="price-req-close-error" id="price-req-close" type="button" value=\"' + $localeSettings.text_close + '\" style="background: #' + $pricereqSettings.style_close_error_background + '; height: ' + $pricereqSettings.style_submit_height + 'px; width: ' + $pricereqSettings.style_submit_width + 'px;" /></div>'
 					);
 				}
 			}, "json");
@@ -137,15 +131,19 @@ var pricereqFrontend = (function () { "use strict";
 			if ( !(e.length > 0) ) {
 				$('.price-req-input').find('input[name="pricereq-email"]').addClass('price-req-inp-err');
 			}
-			err.addClass('price-req-error').text("{_wp('Complete «Phone» or «Email»')}");
+			err.addClass('price-req-error').text($localeSettings.error_name_phone);
 			$('.price-req-form').append( err );
 		}
 	};
 	//------------------- END EVENT HANDLERS ----------------------
 
 	//------------------- BEGIN PUBLIC METHODS --------------------
-	initModule = function () {		
-		$(document).on('click', '{$pricereq_settings.id_in_html}', onIdinhtmlClick);
+	initModule = function (pricereqUrl, pluginSettings, localeSettings) {		
+		$pricereqUrl      = pricereqUrl;
+		$pricereqSettings = pluginSettings;
+		$localeSettings   = localeSettings;
+
+		$(document).on('click', $pricereqSettings.id_in_html, onIdinhtmlClick);
 
 		$(document).on('click', '.price-req-bg, #price-req-close-x, #price-req-close', removePricereqForm);
 
