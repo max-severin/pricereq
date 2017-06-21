@@ -54,8 +54,13 @@ class shopPricereqPluginRequestModel extends waModel {
 
 			$contact = new waContact($request['contact_id']);
 
-			$pricereq_requests[$id]['contact_name'] = htmlspecialchars( $contact->getName() );
-			$pricereq_requests[$id]['contact_email'] = htmlspecialchars( $contact->get('email', 'default') );
+			if ( $contact->exists() ) {
+				$pricereq_requests[$id]['contact_name'] = htmlspecialchars( $contact->get('name') );
+				$pricereq_requests[$id]['contact_email'] = htmlspecialchars( $contact->get('email', 'default') );
+			} else {
+				$pricereq_requests[$id]['contact_name'] = '';
+				$pricereq_requests[$id]['contact_email'] = '';
+			}
 
 			$pricereq_requests[$id]['name'] = addslashes(htmlspecialchars( $request['name'] ));
 			$pricereq_requests[$id]['phone'] = addslashes(htmlspecialchars( $request['phone'] ));
