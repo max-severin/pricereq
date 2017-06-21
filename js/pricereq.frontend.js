@@ -78,7 +78,7 @@ var pricereqFrontend = (function () { "use strict";
 
 		$('.price-req-form input[name="pricereq-name"]').focus();
 
-		if ($pricereqSettings.comment_status !== 'on') {
+		if ($pricereqSettings.phone_masked_input !== 'on') {
 			$('.price-req-form input[name="pricereq-phone"]').mask($pricereqSettings.phone_masked_input);
 		}
 
