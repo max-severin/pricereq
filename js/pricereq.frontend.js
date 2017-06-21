@@ -5,7 +5,7 @@
 
 /*global $, pricereqFrontend */
 
-var pricereqFrontend = (function () { "use strict";
+var pricereqFrontend = (function ($) { "use strict";
 	//---------------- BEGIN MODULE SCOPE VARIABLES ---------------
 	var
 		$pricereqUrl, $pricereqSettings, $localeSettings,
@@ -162,4 +162,4 @@ var pricereqFrontend = (function () { "use strict";
 		initModule: initModule
 	};
 	//------------------- END PUBLIC METHODS ----------------------
-}());
+}(jQuery));
