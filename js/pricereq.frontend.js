@@ -54,10 +54,10 @@ var pricereqFrontend = (function () { "use strict";
 			}
 
 			if (pricereqPrivacyCheckboxStatus === 'on') { 
-				pricereqPrivacyAgreedCheckboxBlock = '<input type="hidden" value="0" name="price-req-privacy-agreed" /><input type="checkbox" value="1" name="price-req-privacy-agreed" id="price-req-privacy-agreed" ' + pricereqPrivacyAgreedCheckboxChecked + ' />';
+				pricereqPrivacyAgreedCheckboxBlock = '<input type="hidden" value="0" name="price-req-privacy-agreed" /><input type="checkbox" value="1" name="price-req-privacy-agreed" id="price-req-privacy-agreed" ' + pricereqPrivacyAgreedCheckboxChecked + ' /> ';
 			}
 
-			pricereqPrivacyAgreedBlock = '<div class="call-b-input price-req-privacy-agreed-wrapper"><label for="price-req-privacy-agreed">' +
+			pricereqPrivacyAgreedBlock = '<div class="price-req-input price-req-privacy-agreed-wrapper"><label for="price-req-privacy-agreed">' +
 			pricereqPrivacyAgreedCheckboxBlock + '<span>{$pricereq_settings.privacy_text}</span> <a href="{$pricereq_settings.privacy_link_url}" target="_blank">{$pricereq_settings.privacy_link_text}</a>' +
 			'</label></div>';
 		}

@@ -65,7 +65,7 @@ var pricereqBackendSettings = (function () { "use strict";
                 '<div class="price-req-input"><input type="text" name="pricereq-email" placeholder="' + textEmailPlaceholder + '" value="" /></div>' +
                 '<div class="price-req-input"><textarea name="comment" placeholder="' + textCommentPlaceholder + '"></textarea></div>' +
                 '<div class="price-req-input price-req-privacy-agreed-wrapper"><label for="price-req-privacy-agreed">' +
-                '<input type="hidden" value="0" name="price-req-privacy-agreed" /><input type="checkbox" value="1" name="price-req-privacy-agreed" id="price-req-privacy-agreed" /><span>' + privacyText + '</span> <a href="' + privacyLinkUrl + '" target="_blank">' + privacyLinkText + '</a>' +
+                '<input type="hidden" value="0" name="price-req-privacy-agreed" /><input type="checkbox" value="1" name="price-req-privacy-agreed" id="price-req-privacy-agreed" /> <span>' + privacyText + '</span> <a href="' + privacyLinkUrl + '" target="_blank">' + privacyLinkText + '</a>' +
                 '</label> </div>' +
                 '<div class="price-req-input"><input id="price-req-submit" type="submit" value="' + textSubmitButton + '" disabled="disabled" style="' + styleSubmitBackground + styleSubmitTextColor + styleSubmitHeight + styleSubmitWidth + '" /></div>'
             );
